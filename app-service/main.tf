@@ -25,7 +25,7 @@ resource "azurerm_app_service" "server" {
   site_config {
     # must be set to true if running 'Free' tier
     use_32_bit_worker_process = var.use_32_bit_process
-    always_on = true
+    always_on = var.always_on
     linux_fx_version  = "DOCKER|${local.container_registry_hostname}/${var.server_container_name}:latest"
   }
 
