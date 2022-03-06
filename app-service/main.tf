@@ -30,9 +30,24 @@ resource "azurerm_app_service" "server" {
   }
 
   app_settings = {
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = false
-    "DOCKER_REGISTRY_SERVER_USERNAME"     = var.container_registry_name
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://${local.container_registry_hostname}"
-    "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.container_registry_password
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE             = false
+    DOCKER_REGISTRY_SERVER_USERNAME                 = var.container_registry_name
+    DOCKER_REGISTRY_SERVER_URL                      = "https://${local.container_registry_hostname}"
+    DOCKER_REGISTRY_SERVER_PASSWORD                 = var.container_registry_password
+    APPLICATIONINSIGHTS_CONNECTION_STRING           = var.app_insights_connection_string
+    APPINSIGHTS_INSTRUMENTATIONKEY                  = var.app_insights_instrumentation_key
+    APPINSIGHTS_PROFILERFEATURE_VERSION             = "1.0.0"
+    APPINSIGHTS_SNAPSHOTFEATURE_VERSION             = "1.0.0"
+    DiagnosticServices_EXTENSION_VERSION            = "~3"
+    InstrumentationEngine_EXTENSION_VERSION         = "disabled"
+    SnapshotDebugger_EXTENSION_VERSION              = "disabled"
+    XDT_MicrosoftApplicationInsights_BaseExtensions = "disabled"
+    XDT_MicrosoftApplicationInsights_Mode           = "recommended"
+    XDT_MicrosoftApplicationInsights_NodeJS         = "1"
+    XDT_MicrosoftApplicationInsights_PreemptSdk     = "disabled"
+  }
+
+  tags = {
+    Env = var.environment
   }
 }
